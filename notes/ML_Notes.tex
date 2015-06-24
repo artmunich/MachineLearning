@@ -1,0 +1,70 @@
+\documentclass{article}
+\usepackage{amsmath}
+
+\begin{document}
+
+%---week 1----------------------
+\section{Week 1}
+
+\subsection{Model Representation}
+	\begin{displaymath}
+		h_\theta(x)=\theta_0+\theta_1x+\epsilon
+	\end{displaymath}
+	
+\subsection{Cost Function}
+	
+	$$J(\theta_0,\theta_1)=\frac{1}{2m}\sum_{i=1}^{m}(h_\theta(x^{(i)})-y^{(i)})^2$$
+
+\subsection{Gradient Descent}
+	Want: $min J(\theta_0,\theta_1)$
+	
+	Algorithm:
+	repeat until convergence \{
+	
+	 $\theta_j := \theta_j - \alpha\frac{\partial}{\partial\theta_j}J(\theta_0,\theta_1),j=0,1$
+	 
+	 simutaneously update $\theta_j$
+	 
+	  \}
+
+%-------------week 2----------------------------
+\section{Week 2}
+\subsection{Multivariate Linear Regression Model}
+\textbf{Hypothesis:}
+$$h_\theta(x)=X\Theta$$
+where
+\begin{equation*}
+X=
+\left(\begin{array}{ccccc}
+1 & x^{(1)}_1 & x^{(1)}_2 & \cdots & x^{(1)}_n \\
+1 & x^{(2)}_1 & x^{(2)}_2 & \cdots & x^{(2)}_n \\
+\vdots & \vdots & \vdots &          &\vdots \\
+1 & x^{(m)}_1 & x^{(m)}_2 & \cdots & x^{(m)}_n \\
+\end{array}
+\right)_{m\times{(n+1)}},
+\Theta =
+\left(\begin{array}{c}
+\theta_0\\
+\theta_1\\
+\vdots\\
+\theta_n
+\end{array}
+\right)_{(n+1)\times 1}
+\end{equation*}
+
+\subsection{Cost function(Vectorization)}
+$$J(\theta)=\frac{1}{2m}(X\Theta-\vec{y})^T(X\Theta-\vec{y})$$
+
+\subsection{Normal Equation}
+$$\Theta = (X^TX)^{-1}X^T\vec{y}$$
+\textbf{Deduction:}
+	\begin{eqnarray}
+		J(\theta)=\frac{1}{2m}(X\Theta-\vec{y})^T(X\Theta-\vec{y})\nonumber\\
+			=\frac{1}{2m}\lVert X\Theta - \vec{y}\rVert^2 \nonumber\\
+		\nabla J(\Theta)=\frac{1}{m}X^T(X\Theta-\vec{y})\nonumber\\
+		\nabla J(\Theta)=0 \nonumber \\
+		X^TX\Theta-X^T\vec{y}=0 \nonumber \\
+		\Theta = (X^TX)^{-1}X^T\vec{y} \nonumber
+	\end{eqnarray}	
+
+\end{document}
