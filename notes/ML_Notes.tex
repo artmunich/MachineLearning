@@ -66,5 +66,26 @@ $$\Theta = (X^TX)^{-1}X^T\vec{y}$$
 		X^TX\Theta-X^T\vec{y}=0 \nonumber \\
 		\Theta = (X^TX)^{-1}X^T\vec{y} \nonumber
 	\end{eqnarray}	
+	
+%-----------------week 3------------------
+\section{Week 3}
+
+\subsection{Classification}
+\flushleft
+Classification: $y\in \{0,1\}$, $h_\theta(x) $ can be $> 1$ or  $< 0$.
+
+Logistic Regression: $0\leq h_\theta(x)\leq 1$
+
+\subsection{Logistic Regression}
+\textbf{Logistic Regression Model:}
+	\begin{displaymath}
+		h_\theta(x)=\frac{1}{1+e^{-\Theta^Tx}}
+	\end{displaymath}
+\textbf{Interpretation:}
+	\begin{itemize}
+		\item $h_\theta(x)=$estimated probability that $y=1$ on input $x$.
+		\item $h_\theta(x)=P(y=1|x;\theta)$ means probability that $y=1$, given $x$, parameterized by $\theta$.
+		\item $P(y=0|x;\theta)+P(y=1|x;\theta)=1$	
+	\end{itemize}
 
 \end{document}
