@@ -1,5 +1,7 @@
 \documentclass{article}
 \usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{hyperref}
 
 \begin{document}
 
@@ -70,13 +72,18 @@ $$\Theta = (X^TX)^{-1}X^T\vec{y}$$
 %-----------------week 3------------------
 \section{Week 3}
 
-\subsection{Classification}
+\subsection{Classification} %----3.1-----
 \flushleft
 Classification: $y\in \{0,1\}$, $h_\theta(x) $ can be $> 1$ or  $< 0$.
 
 Logistic Regression: $0\leq h_\theta(x)\leq 1$
 
-\subsection{Logistic Regression}
+\subsection{Logistic Regression} %-----3.2-----
+\textbf{Sigmoid(logistic) function}
+\begin{displaymath}
+	g(t)=\frac{1}{1+e^{-t}}
+\end{displaymath}
+
 \textbf{Logistic Regression Model:}
 	\begin{displaymath}
 		h_\theta(x)=\frac{1}{1+e^{-\Theta^Tx}}
@@ -87,5 +94,153 @@ Logistic Regression: $0\leq h_\theta(x)\leq 1$
 		\item $h_\theta(x)=P(y=1|x;\theta)$ means probability that $y=1$, given $x$, parameterized by $\theta$.
 		\item $P(y=0|x;\theta)+P(y=1|x;\theta)=1$	
 	\end{itemize}
+
+\subsection{Decision Boundary} %----3.3------------
+
+Descion boundary is a property of the hypothesis and parameters.
+
+\textbf{Linear decision boundary}
+$h_\theta(x)=g(\theta_0+\theta_1*x_1+\theta_2*x_2)$:
+
+$$\theta_0+\theta_1x_1+\cdots+\theta_nx_n=\sum_{i=0}^{n}=\Theta^Tx$$
+
+\textbf{Non-linear decision boundary}
+
+\subsection{Cost Function}
+$$	J(\theta)=\frac{1}{m}\sum_{i=1}^{m}Cost(h_\theta(x^{(i)}),y^{(i)})$$
+\begin{displaymath}
+		Cost(h_\theta(x),y)=\left\{\begin{array}{ll}
+					-\log(h_\theta(x)) & y=1\\
+					-\log(1-h_\theta(x)) & y=0
+					\end{array}\right.
+\end{displaymath}
+$h_\theta(x)$ is hypothesis, $y$ is training examples.
+
+\textbf{Simplified cost function}
+$$J(\theta)=-\frac{1}{m}[\sum_{i=1}^{m}y^i\log h_\theta(x^i)+(1-y^i)\log (1-h_\theta(x^i))]$$
+
+\subsection{Gradient Descent}
+\textbf{To fit parameters $\theta$}:
+$\min J(\theta)$
+
+\textbf{To make a prediction given new $x$}:
+
+output $p(y=1|x;\theta)=h_\theta(x)=\frac{1}{1+e^{-\Theta^Tx}}$
+
+\textbf{Gradient Descent:}
+Repeat \{
+\begin{eqnarray}
+\theta_j := \theta_j - \alpha\frac{\partial}{\partial\theta_j}J(\theta) \nonumber \\
+:= \theta_j - \alpha\sum_{i=1}^{m}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)},(j=0\cdots n)\nonumber
+\end{eqnarray}
+\}
+
+Caution: Simulataneously update all $\theta_j$.
+
+Click \href{http://blog.csdn.net/dongtingzhizi/article/details/15962797}{here for detailed deduction}.
+
+\subsection{Advanced Optimization}
+[x,fval,exitflag]=fminunc(fun,x0,options)
+
+\subsection{Multiclass Classification}
+\textbf{one-vs-all}
+
+\subsection{Regularization}
+\textbf{Underfitting, just right, overfitting}
+
+Addressiong overfitting:
+\begin{enumerate}
+	\item Reduce number of features:
+		\begin{itemize}
+			\item Manually select which features to keep;
+			\item Model selection algorithm
+		\end{itemize}
+	\item Regularization:
+		\begin{itemize}
+			\item Keep all features, but reduce magnitude/values of parameters $\theta_j$;
+			\item Works well when there are a lot of features. 
+		\end{itemize}
+\end{enumerate}
+
+\textbf{Regulariztion:}
+
+Small values for parameters $\theta_0,\theta_1,\cdots,\theta_n$
+\begin{itemize}
+	\item "Simpler" hypothesis
+	\item Less prone to overfitting.
+\end{itemize}
+\textbf{Cost function}
+$$J(\theta)=\frac{1}{2m}[\sum_{i=1}^{n}(h_\theta(x^{(i)})-y^{(i)})^2 + \lambda\sum_{j=1}^{n}\theta_j^2]$$
+$$\min J(\theta)$$
+
+\subsection{Regularized linear/logistic regression}
+\textbf{Cost function and gradient}
+$$J(\theta)=\frac{1}{m}\sum_{i=1}^{m}[-y^i\log h_\theta(x^{(i)})-(1-y^{(i)})\log (1-h_\theta(x^{(i)}))]+\frac{\lambda}{2m}\sum_{j=1}^{n}\theta_j^2$$
+
+\subsection{Vectorization}
+\begin{equation*}
+X=
+\left(\begin{array}{ccccc}
+x^{(1)}_0 & x^{(1)}_1 & x^{(1)}_2 & \cdots & x^{(1)}_n \\
+x^{(2)}_0 & x^{(2)}_1 & x^{(2)}_2 & \cdots & x^{(2)}_n \\
+\vdots & \vdots & \vdots &          &\vdots \\
+x^{(m)}_0 & x^{(m)}_1 & x^{(m)}_2 & \cdots & x^{(m)}_n \\
+\end{array}
+\right)_{m\times{(n+1)}},
+\Theta =
+\left(\begin{array}{c}
+\theta_0\\
+\theta_1\\
+\vdots\\
+\theta_n
+\end{array}
+\right)_{(n+1)\times 1}
+y =
+\left(\begin{array}{c}
+y^{(1)}\\
+y^{(2)}\\
+\vdots\\
+y^{(m)}
+\end{array}
+\right)_{m\times 1}
+\end{equation*}
+
+So,
+
+\begin{displaymath}
+A=X\Theta=
+\left(\begin{array}{c}
+x^{(1)}_0\theta_0 + x^{(1)}_1 \theta_1 + x^{(1)}_2\theta_2 + \cdots + x^{(1)}_n\theta_n \\
+x^{(2)}_0\theta_0 + x^{(2)}_1\theta_1 + x^{(2)}_2\theta_2 + \cdots + x^{(2)}_n\theta_n \\
+\vdots  \\
+x^{(m)}_0\theta_0 + x^{(m)}_1\theta_1 + x^{(m)}_2\theta_2 + \cdots + x^{(m)}_n\theta_n \\
+\end{array}
+\right)_{m\times 1}
+\end{displaymath}
+
+We have,
+
+\begin{displaymath}
+E=h_\theta(x)-y=g(X\Theta)-y=
+\left(\begin{array}{c}
+g(A^{(1)})-y^{(1)}\\
+g(A^{(m)})-y^{(m)}\\
+\vdots\\
+g(A^{(m)})-y^{(m)}
+\end{array}
+\right)_{m\times 1}
+\end{displaymath}.
+
+Now let's take a look at the update of $\theta$:
+\begin{eqnarray}
+\theta_j := \theta_j - \alpha*\sum_{i=1}^{m}(h_\theta(x^{(i)})-y^{(i)})x_j^{(i)} \nonumber \\
+:= \theta_j - \alpha * \sum_{i=1}^{m}E^{(i)}*x_j^{(i)} \nonumber\\
+:= \theta_j - \alpha * X(:,j)^T * E \nonumber \\
+(j = 0,1,2,\cdots,n)\nonumber
+\end{eqnarray}
+
+In summary, the matrix form of updating $\theta$ can be expressed below:
+$$\Theta = \Theta - \alpha*X^T*(h_\theta(x)-y)$$
+Thus will pave a convenient way to express in MATLAB. Also, we can express cost function and gradient in matrix form.
 
 \end{document}
