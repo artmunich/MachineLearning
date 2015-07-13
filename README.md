@@ -7,3 +7,5 @@ This is where I put my [notes](http://note.youdao.com/share/?id=87b3b1439793e6dc
 
 ##Reference
 *[A good gradient descent example](https://github.com/mattnedrich/GradientDescentExample)
+
+*[A logistic example based on Python and numpy package](http://blog.csdn.net/u012162613/article/details/41844495)
