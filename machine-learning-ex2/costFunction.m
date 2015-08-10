@@ -19,19 +19,13 @@ grad = zeros(size(theta));
 %
 % Note: grad should have the same dimensions as theta
 %
-% for i=1:m
-    % hx = sigmoid(X(i,:)*theta);
-    % J = J + (-y(i)*log(hx)-(1-y(i))*log(1-hx));
-% end
-% J = J/m;
+
 
 %Vectorization
 hx = sigmoid(X*theta);
 J = sum(-y.*log(hx)-(1-y).*log(1-hx))/m;
 
-for j=1:size(theta)
-	grad(j) = sum((hx-y).*X(:,j))/m;
-end
+grad=X'*(hx-y)/m;
 
 
 % =============================================================
